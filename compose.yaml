@@ -1,0 +1,38 @@
+services:
+  server:
+    build:
+      context: ./apps/server
+      target: development
+    command: ["zsh", "-c", "pnpm install && pnpm run start:dev"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/server:/usr/src/app
+      - /usr/src/app/node_modules
+  web:
+    build:
+      context: ./apps/web
+      target: development
+    command: [ "zsh", "-c", "pnpm install && pnpm run dev" ]
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./apps/web:/usr/src/app
+      - /usr/src/app/node_modules
+  postgres:
+    image: postgres:18
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: development
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - storage:/var/lib/postgresql
+    restart: always
+  redis:
+    image: redis:8.4-rc1
+    ports:
+      - "6379:6379"
+    restart: always
+volumes:
+  storage:
