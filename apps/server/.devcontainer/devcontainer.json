@@ -1,0 +1,10 @@
+{
+  "name": "server",
+  "dockerComposeFile": "../../../compose.yaml",
+  "service": "server",
+  "workspaceFolder": "/usr/src/app",
+  "overrideCommand": false,
+  "extensions": [
+    "esbenp.prettier-vscode"
+  ]
+}

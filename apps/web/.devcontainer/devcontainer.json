@@ -1,0 +1,11 @@
+{
+  "name": "web",
+  "dockerComposeFile": "../../../compose.yaml",
+  "service": "web",
+  "workspaceFolder": "/usr/src/app",
+  "overrideCommand": false,
+  "extensions": [
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
