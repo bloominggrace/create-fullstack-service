@@ -5,6 +5,7 @@
   "workspaceFolder": "/usr/src/app",
   "overrideCommand": false,
   "extensions": [
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
   ]
 }
