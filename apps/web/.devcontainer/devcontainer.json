@@ -4,8 +4,17 @@
   "service": "web",
   "workspaceFolder": "/usr/src/app",
   "overrideCommand": false,
-  "extensions": [
-    "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss"
-  ]
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode", "bradlc.vscode-tailwindcss"],
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "zsh"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  }
 }

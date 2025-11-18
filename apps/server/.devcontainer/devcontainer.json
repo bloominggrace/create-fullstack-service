@@ -4,7 +4,17 @@
   "service": "server",
   "workspaceFolder": "/usr/src/app",
   "overrideCommand": false,
-  "extensions": [
-    "esbenp.prettier-vscode"
-  ]
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode"],
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "zsh"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  }
 }
