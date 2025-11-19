@@ -7,8 +7,10 @@
       "name": "Attach to Nest:9229",
       "address": "localhost",
       "port": 9229,
-      "restart": false,
+      "restart": true,
       "timeout": 30000,
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "localRoot": "${workspaceFolder}",
       "remoteRoot": "/usr/src/app"
     }
