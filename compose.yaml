@@ -3,7 +3,7 @@ services:
     build:
       context: ./apps/server
       target: development
-    command: ["zsh", "-c", "pnpm install && pnpm run start:dev"]
+    command: ["zsh", "-c", "pnpm install && pnpm run start:debug:docker"]
     ports:
       - "3000:3000"
     volumes:
