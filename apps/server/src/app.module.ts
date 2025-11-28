@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule, Params } from 'nestjs-pino';
-import { AuthModule } from './auth/auth.module';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { isProduction } from './app.utils';
+import { AuthModule } from './auth/auth.module';
 
 const loggerConfig: Params = {
   pinoHttp: {
