@@ -5,6 +5,7 @@
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -24,8 +25,8 @@
     "seeder:run": "mikro-orm seeder:run"
   },
   "engines": {
-    "npm": ">=10.0.0",
-    "node": ">=20.0.0"
+    "pnpm": ">=10.0.0",
+    "node": ">=24.0.0"
   },
   "dependencies": {
     "@mikro-orm/cli": "^6.6.1",
