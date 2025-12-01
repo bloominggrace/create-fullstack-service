@@ -4,7 +4,7 @@ import { defineConfig } from '@mikro-orm/postgresql';
 import { SeedManager } from '@mikro-orm/seeder';
 import { config } from 'dotenv';
 
-import { isProduction } from './app.utils';
+import { isProduction } from './src/app.utils';
 
 config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -17,7 +17,7 @@ export class TestEntity {
   id!: number;
 }
 
-export const mikroOrmConfig = defineConfig({
+export default defineConfig({
   dbName: process.env.POSTGRES_DB_NAME,
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
@@ -41,5 +41,3 @@ export const mikroOrmConfig = defineConfig({
     emit: 'ts',
   },
 });
-
-export default mikroOrmConfig;
