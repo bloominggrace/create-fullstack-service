@@ -6,7 +6,6 @@ import { LoggerModule, Params } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { isProduction } from './app.utils';
-import { mikroOrmConfig } from './mikro-orm.config';
 
 const loggerConfig: Params = {
   pinoHttp: {
@@ -27,7 +26,7 @@ const loggerConfig: Params = {
 @Module({
   imports: [
     LoggerModule.forRoot(loggerConfig),
-    MikroOrmModule.forRoot(mikroOrmConfig),
+    MikroOrmModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
