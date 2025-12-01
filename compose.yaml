@@ -6,6 +6,8 @@ services:
     command: ["zsh", "-c", "pnpm install && pnpm run start:debug:docker"]
     ports:
       - "3000:3000"
+    environment:
+      POSTGRES_HOST: postgres
     volumes:
       - ./apps/server:/usr/src/app
       - /usr/src/app/node_modules
