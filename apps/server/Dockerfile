@@ -8,7 +8,6 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     -p git \
     -p https://github.com/zsh-users/zsh-autosuggestions \
     -p https://github.com/zsh-users/zsh-completions
-RUN npm i -g @nestjs/cli
-RUN npm i -g pnpm
+RUN npm i -g @nestjs/cli pnpm@10
 
 CMD ["zsh"]
