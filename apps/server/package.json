@@ -15,6 +15,7 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
@@ -64,6 +65,7 @@
     "@swc/core": "^1.10.8",
     "@types/express": "^5.0.0",
     "@types/node": "^24.10.1",
+    "@types/node": "^24.10.1",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
@@ -83,28 +85,5 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "@swc/core"
-    ]
   }
 }
