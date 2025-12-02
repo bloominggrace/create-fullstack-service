@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+TITLE=$(echo "$(cat "$1")" | head -n 1)
+TITLE_LENGTH=${#TITLE}
+
+if [ -z "$TITLE" ]; then
+  echo "🔴 커밋 제목은 비어있을 수 없습니다."
+  exit 1
+fi
+
+if [ $TITLE_LENGTH -gt 50 ]; then
+  echo "🔴 커밋 제목이 $TITLE_LENGTH자로 50자 제한을 초과했습니다."
+  exit 1
+fi
+
+if [[ "$TITLE" == *\. ]]; then
+  echo "🔴 커밋 제목은 마침표로 끝날 수 없습니다."
+  exit 1
+fi
+
+exit 0
