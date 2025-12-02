@@ -24,10 +24,7 @@ const loggerConfig: Params = {
 };
 
 @Module({
-  imports: [
-    LoggerModule.forRoot(loggerConfig),
-    MikroOrmModule.forRoot(),
-  ],
+  imports: [LoggerModule.forRoot(loggerConfig), MikroOrmModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
