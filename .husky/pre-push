@@ -1,0 +1,20 @@
+#!/bin/zsh
+
+GIT_STATUS=$(git status --porcelain)
+
+if ! pnpm lint; then
+  echo "🔴 린트 검사에 실패했습니다."
+  exit 1
+fi
+
+if [ "$GIT_STATUS" != "$(git status --porcelain)" ]; then
+  echo "⚠️ 코드가 수정되었으니 변경사항을 반영한 뒤 다시 시도하세요."
+  exit 1
+fi
+
+if ! pnpm type-check; then
+  echo "🔴 타입 검사에 실패했습니다."
+  exit 1
+fi
+
+exit 0
