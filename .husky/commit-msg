@@ -8,8 +8,8 @@ if [ -z "$TITLE" ]; then
   exit 1
 fi
 
-if [ $TITLE_LENGTH -gt 50 ]; then
-  echo "🔴 커밋 제목이 $TITLE_LENGTH자로 50자 제한을 초과했습니다."
+if [ $TITLE_LENGTH -gt 50 ] && ! [[ "$TITLE" =~ ^(fixup|squash)! ]]; then
+  echo "🔴 커밋 제목이 ${TITLE_LENGTH}자로 50자 제한을 초과했습니다."
   exit 1
 fi
 
