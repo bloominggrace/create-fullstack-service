@@ -1,30 +1,20 @@
 import { MikroORM } from '@mikro-orm/core';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { CacheModule } from '@nestjs/cache-manager';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
-import { LoggerModule, Params } from 'nestjs-pino';
+import { LoggerModule } from 'nestjs-pino';
 
+import { cacheConfig, loggerConfig } from './app.configs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { isProduction } from './app.utils';
 
-const loggerConfig: Params = {
-  pinoHttp: {
-    level: isProduction() ? 'info' : 'debug',
-    transport: isProduction()
-      ? undefined
-      : {
-          target: 'pino-pretty',
-          options: {
-            translateTime: 'SYS:standard',
-            ignore: 'pid,hostname',
-            singleLine: true,
-          },
-        },
-  },
-};
-
 @Module({
-  imports: [LoggerModule.forRoot(loggerConfig), MikroOrmModule.forRoot()],
+  imports: [
+    LoggerModule.forRoot(loggerConfig),
+    MikroOrmModule.forRoot(),
+    CacheModule.registerAsync(cacheConfig),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
