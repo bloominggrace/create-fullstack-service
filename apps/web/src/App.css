@@ -1,21 +1,31 @@
+:root {
+  --max-width: 1280px;
+  --padding: 2rem;
+  --text-color-muted: #888;
+  --shadow-blue: #646cffaa;
+  --shadow-react: #61dafbaa;
+}
+
 #root {
-  max-width: 1280px;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--padding);
   text-align: center;
 }
 
 .logo {
   height: 6em;
   padding: 1.5em;
+  transition: filter 300ms ease;
   will-change: filter;
-  transition: filter 300ms;
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em var(--shadow-blue));
 }
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em var(--shadow-react));
 }
 
 @keyframes logo-spin {
@@ -28,15 +38,16 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .logo.spin {
+    animation: logo-spin 20s linear infinite;
   }
 }
 
 .card {
   padding: 2em;
+  border-radius: 0.5rem;
 }
 
 .read-the-docs {
-  color: #888;
+  color: var(--text-color-muted);
 }
