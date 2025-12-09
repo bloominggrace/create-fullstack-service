@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import ms from 'ms';
 import { type Params } from 'nestjs-pino';
 
-import { isProduction } from './app.utils';
+import { isProduction } from '../mikro-orm.config';
 
 export const loggerConfig: Params = {
   pinoHttp: {
