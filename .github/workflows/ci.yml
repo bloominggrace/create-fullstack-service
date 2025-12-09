@@ -1,0 +1,83 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 빌드
+    runs-on: ubuntu-latest
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v6
+      - name: 런타임 환경 설정
+        uses: jdx/mise-action@v3
+      - name: 캐시 경로 설정
+        shell: bash
+        run: |
+          echo "CACHE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: 캐시 설정
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: 의존성 설치
+        run: pnpm install
+      - name: 프로젝트 빌드
+        run: pnpm build
+      - name: 산출물 올리기
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            ./apps/server/dist
+  test:
+    name: 테스트
+    needs: build
+    runs-on: ubuntu-latest
+    environment: test
+    env:
+      NODE_ENV: ${{ vars.NODE_ENV }}
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v6
+      - name: 산출물 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          name: artifacts
+          path: ./apps/server/dist
+      - name: 인프라 실행
+        run: docker compose up -d
+      - name: 런타임 환경 설정
+        uses: jdx/mise-action@v3
+      - name: 환경 변수 파일 생성
+        run: |
+          cat << EOF > apps/server/.env.test
+          POSTGRES_HOST=${{ vars.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ vars.POSTGRES_PORT }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB=${{ vars.POSTGRES_DB }}
+          REDIS_HOST=${{ vars.REDIS_HOST }}
+          REDIS_PORT=${{ vars.REDIS_PORT }}
+          REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
+          REDIS_DB=${{ vars.REDIS_DB }}
+          EOF
+      - name: 캐시 경로 설정
+        shell: bash
+        run: |
+          echo "CACHE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: 캐시 설정
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: 의존성 설치
+        run: pnpm install
+      - name: 프로젝트 테스트
+        run: pnpm test

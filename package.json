@@ -10,7 +10,9 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky",
     "lint": "pnpm --parallel -r lint",
-    "type-check": "pnpm --parallel -r type-check"
+    "type-check": "pnpm --parallel -r type-check",
+    "build": "pnpm --parallel -r build",
+    "test": "pnpm run -r --parallel test && pnpm run -r --parallel test:e2e"
   },
   "devDependencies": {
     "husky": "^9.1.7"
