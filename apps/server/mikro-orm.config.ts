@@ -1,30 +1,28 @@
-import { Entity, PrimaryKey } from '@mikro-orm/core';
 import { Migrator } from '@mikro-orm/migrations';
 import { defineConfig } from '@mikro-orm/postgresql';
 import { SeedManager } from '@mikro-orm/seeder';
 import { config } from 'dotenv';
 
-import { isProduction } from './src/app.utils';
-
 config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-// TODO: TestEntity는 실제 Entity가 추가된 뒤 삭제되어야 합니다.
-@Entity()
-export class TestEntity {
-  @PrimaryKey()
-  id!: number;
+export function isProduction(): boolean {
+  return process.env.NODE_ENV === 'production';
+}
+
+export function isDevelopment(): boolean {
+  return process.env.NODE_ENV === 'development';
 }
 
 export default defineConfig({
   dbName: process.env.POSTGRES_DB,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
   host: process.env.POSTGRES_HOST,
   port: Number(process.env.POSTGRES_PORT),
-  entities: ['dist/**/*.entity.js', TestEntity],
-  entitiesTs: ['src/**/*.entity.ts'],
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  entities: ['dist/**/*.entity.js'],
+  entitiesTs: isDevelopment() ? ['src/**/*.entity.ts'] : undefined,
   debug: !isProduction(),
   validate: true,
   strict: true,

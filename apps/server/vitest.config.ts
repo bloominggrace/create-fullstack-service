@@ -4,6 +4,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     globals: true,
+    globalSetup: 'vitest.globalSetup.ts',
     include: ['src/**/*.spec.ts'],
     coverage: {
       reporter: ['text', 'lcov'],

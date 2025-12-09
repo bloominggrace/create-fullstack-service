@@ -4,10 +4,10 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 
+import { isProduction } from '../mikro-orm.config';
 import { cacheConfig, loggerConfig } from './app.configs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { isProduction } from './app.utils';
 
 @Module({
   imports: [
