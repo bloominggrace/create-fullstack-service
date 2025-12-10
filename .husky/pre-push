@@ -2,19 +2,22 @@
 
 GIT_STATUS=$(git status --porcelain)
 
-if ! pnpm lint; then
-  echo "🔴 린트 검사에 실패했습니다."
+echo "🔍 린트 검사를 시작합니다."
+
+if ! pnpm lint > /dev/null 2>&1 || [ "$GIT_STATUS" != "$(git status --porcelain)" ]; then
+  echo "❌ 린트 검사에 실패하여 코드가 변경되었으니, 확인 후 다시 시도해주세요."
   exit 1
+else
+  echo "✅ 린트 검사를 통과했습니다."
 fi
 
-if [ "$GIT_STATUS" != "$(git status --porcelain)" ]; then
-  echo "⚠️ 코드가 수정되었으니 변경사항을 반영한 뒤 다시 시도하세요."
-  exit 1
-fi
+echo "🔍 타입 검사를 시작합니다."
 
-if ! pnpm type-check; then
-  echo "🔴 타입 검사에 실패했습니다."
+if ! pnpm type-check > /dev/null 2>&1; then
+  echo "❌ 타입 검사에 실패했습니다."
   exit 1
+else
+  echo "✅ 타입 검사를 통과했습니다."
 fi
 
 exit 0
