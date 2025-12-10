@@ -5,6 +5,8 @@ dist/
 dist-ssr/
 *.tsbuildinfo
 
+.turbo/
+
 .env*
 !.env.template
 

@@ -6,15 +6,18 @@
     "pnpm": ">=10.0.0",
     "node": ">=24.0.0"
   },
+  "packageManager": "pnpm@10.23.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky",
-    "lint": "pnpm --parallel -r lint",
-    "type-check": "pnpm --parallel -r type-check",
-    "build": "pnpm --parallel -r build",
-    "test": "pnpm run -r --parallel test && pnpm run -r --parallel test:e2e"
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "test": "turbo test test:e2e"
   },
   "devDependencies": {
+    "turbo": "^2.6.1",
     "husky": "^9.1.7"
   },
   "pnpm": {
