@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v6
       - name: 런타임 환경 설정
         uses: jdx/mise-action@v3
+        env:
+          MISE_NODE_GPG_VERIFY: 'false'
       - name: 캐시 경로 설정
         shell: bash
         run: |
@@ -53,6 +55,8 @@ jobs:
         run: docker compose up -d
       - name: 런타임 환경 설정
         uses: jdx/mise-action@v3
+        env:
+          MISE_NODE_GPG_VERIFY: 'false'
       - name: 환경 변수 파일 생성
         run: |
           cat << EOF > apps/server/.env.test
