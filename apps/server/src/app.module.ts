@@ -10,11 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [
-    LoggerModule.forRoot(loggerConfig),
-    MikroOrmModule.forRoot(),
-    CacheModule.registerAsync(cacheConfig),
-  ],
+  imports: [LoggerModule.forRoot(loggerConfig), MikroOrmModule.forRoot(), CacheModule.registerAsync(cacheConfig)],
   controllers: [AppController],
   providers: [AppService],
 })

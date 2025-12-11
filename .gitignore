@@ -16,6 +16,7 @@ logs/
 *-error.log*
 
 .idea/
+!idea/dictionaries
 *.iml
 *.iws
 .idea_modules/
