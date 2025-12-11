@@ -5,6 +5,7 @@ import { config } from 'dotenv';
 
 config({
   path: `.env.${process.env.NODE_ENV}`,
+  quiet: true,
 });
 
 export function isProduction(): boolean {
@@ -23,7 +24,7 @@ export default defineConfig({
   password: process.env.POSTGRES_PASSWORD,
   entities: ['dist/**/*.entity.js'],
   entitiesTs: isDevelopment() ? ['src/**/*.entity.ts'] : undefined,
-  debug: !isProduction(),
+  debug: isDevelopment(),
   validate: true,
   strict: true,
   extensions: [Migrator, SeedManager],
