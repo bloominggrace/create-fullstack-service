@@ -4,10 +4,9 @@ import { TestSeeder } from './mikro-orm.seeders';
 
 export async function setup(): Promise<void> {
   const mikroOrm = await MikroORM.init();
-  const schemaGenerator = mikroOrm.getSchemaGenerator();
-  await schemaGenerator.ensureDatabase();
-  await schemaGenerator.updateSchema();
-  await schemaGenerator.clearDatabase();
-  await mikroOrm.getSeeder().seed(TestSeeder);
+  await mikroOrm.schema.ensureDatabase();
+  await mikroOrm.schema.updateSchema();
+  await mikroOrm.schema.clearDatabase();
+  await mikroOrm.seeder.seed(TestSeeder);
   await mikroOrm.close();
 }
