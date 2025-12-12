@@ -1,3 +1,6 @@
 [tools]
 node = "24"
 pnpm = "10"
+
+[env]
+NODE_ENV = "{{ get_env(name='NODE_ENV', default='production') }}"
