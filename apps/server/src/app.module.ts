@@ -24,11 +24,11 @@ export class AppModule implements OnModuleInit {
   }
 
   private async updateDatabase() {
-    const generator = this.orm.getSchemaGenerator();
-    await generator.ensureDatabase();
+    const schema = this.orm.schema;
+    await schema.ensureDatabase();
 
-    if ((await generator.getUpdateSchemaSQL()).length !== 0) {
-      await generator.updateSchema();
+    if ((await schema.getUpdateSchemaSQL()).length !== 0) {
+      await schema.updateSchema();
       Logger.log(`DB가 업데이트 되었습니다.`, AppModule.name);
     }
   }
