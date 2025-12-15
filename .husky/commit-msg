@@ -1,21 +1,27 @@
 #!/bin/zsh
 
-TITLE=$(echo "$(cat "$1")" | head -n 1)
-TITLE_LENGTH=${#TITLE}
+{
+  if ! read -r TITLE; then
+    echo "🔴 커밋 제목은 비어있을 수 없습니다."
+    exit 1
+  fi
 
-if [ -z "$TITLE" ]; then
-  echo "🔴 커밋 제목은 비어있을 수 없습니다."
-  exit 1
-fi
+  if [ ${#TITLE} -gt 50 ] && ! [[ "$TITLE" =~ ^(fixup|squash)! ]]; then
+    echo "🔴 커밋 제목이 ${#TITLE}자로 50자 제한을 초과했습니다."
+    exit 1
+  fi
 
-if [ $TITLE_LENGTH -gt 50 ] && ! [[ "$TITLE" =~ ^(fixup|squash)! ]]; then
-  echo "🔴 커밋 제목이 ${TITLE_LENGTH}자로 50자 제한을 초과했습니다."
-  exit 1
-fi
+  if [[ "$TITLE" == *\. ]]; then
+    echo "🔴 커밋 제목은 마침표로 끝날 수 없습니다."
+    exit 1
+  fi
 
-if [[ "$TITLE" == *\. ]]; then
-  echo "🔴 커밋 제목은 마침표로 끝날 수 없습니다."
-  exit 1
-fi
+  while IFS= read -r BODY; do
+    if [ ${#BODY} -gt 72 ] && ! [[ "$BODY" =~ https?:// ]]; then
+      echo "🔴 '${BODY:0:20}...'가 ${#BODY}자로 72자 제한을 초과했습니다."
+      exit 1
+    fi
+  done
+} < "$1"
 
 exit 0
