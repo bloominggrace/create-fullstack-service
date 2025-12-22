@@ -1,0 +1,6 @@
+{
+  "vitest.debugExclude": ["**/node_modules/**", "<node_internals>/**"],
+  "vitest.nodeEnv": {
+    "NODE_ENV": "test"
+  }
+}
