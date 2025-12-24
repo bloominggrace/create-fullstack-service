@@ -2,5 +2,19 @@
 node = "24"
 pnpm = "10"
 
-[env]
-NODE_ENV = "{{ get_env(name='NODE_ENV', default='production') }}"
+[tasks.infra]
+usage = '''
+arg "action" {
+  choices "up" "down"
+}
+flag "-e --env <environment>" help="실행 모드" default="development" {
+  choices "development" "test" "production"
+}
+'''
+run = '''
+if [ "$usage_action" = "up" ]; then
+  docker compose --env-file apps/server/.env.${usage_env} up --detach
+else
+  docker compose --env-file apps/server/.env.${usage_env} down --volumes
+fi
+'''
