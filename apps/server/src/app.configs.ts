@@ -1,5 +1,5 @@
 import KeyvRedis from '@keyv/redis';
-import { type CacheModuleOptions } from '@nestjs/cache-manager';
+import { type CacheModuleAsyncOptions, type CacheModuleOptions } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import ms from 'ms';
 import { type Params } from 'nestjs-pino';
@@ -50,7 +50,7 @@ export const loggerConfig: Params = {
   },
 };
 
-export const cacheConfig = {
+export const cacheConfig: CacheModuleAsyncOptions = {
   isGlobal: true,
   imports: [ConfigModule],
   inject: [ConfigService],

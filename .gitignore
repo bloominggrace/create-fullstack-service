@@ -17,6 +17,9 @@ logs/
 
 .idea/*
 !.idea/dictionaries
+!.idea/inspectionProfiles
+!.idea/jsLinters
+!.idea/prettier.xml
 *.iml
 *.iws
 .idea_modules/

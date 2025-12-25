@@ -2,6 +2,11 @@
   <dictionary name="project">
     <words>
       <w>mikro</w>
+      <w>otps</w>
+      <w>tencentcloud</w>
+      <w>tencentcloudapi</w>
+      <w>tseslint</w>
+      <w>unplugin</w>
     </words>
   </dictionary>
 </component>
