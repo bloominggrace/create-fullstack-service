@@ -26,7 +26,7 @@ mise install
 인프라를 실행할 때 `--env` 사용하여 환경을 선택할 수 있습니다.
 
 ```shell
-mise run infra:up --env development
+mise run infra up --env development
 ```
 
 ### 4. 의존성 설치
