@@ -21,12 +21,20 @@ mise trust
 mise install
 ```
 
-### 3. 인프라 실행
+### 3. 인프라
 
-인프라를 실행할 때 `--env` 사용하여 환경을 선택할 수 있습니다.
+인프라 실행 및 종료할 때 `--env` 사용하여 환경을 선택할 수 있습니다.
+
+#### 3-1. 인프라 실행
 
 ```shell
 mise run infra up --env development
+```
+
+#### 3-2. 인프라 종료
+
+```shell
+mise run infra down --env development
 ```
 
 ### 4. 의존성 설치
