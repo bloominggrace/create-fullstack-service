@@ -1,9 +1,10 @@
 import { MikroORM } from '@mikro-orm/core';
 
+import mikroOrmConfig from './mikro-orm.config';
 import { TestSeeder } from './mikro-orm.seeders';
 
 export async function setup(): Promise<void> {
-  const mikroOrm = await MikroORM.init();
+  const mikroOrm = await MikroORM.init(mikroOrmConfig);
   await mikroOrm.schema.ensureDatabase();
   await mikroOrm.schema.updateSchema();
   await mikroOrm.schema.clearDatabase();

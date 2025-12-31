@@ -5,10 +5,12 @@ import { Dummy } from './src/entities/dummy.entity';
 
 export class TestSeeder extends Seeder {
   async run(entityManager: EntityManager): Promise<void> {
-    await entityManager.persistAndFlush([
-      entityManager.create(Dummy, {
-        id: 0,
-      }),
-    ]);
+    await entityManager
+      .persist([
+        entityManager.create(Dummy, {
+          id: 0,
+        }),
+      ])
+      .flush();
   }
 }
