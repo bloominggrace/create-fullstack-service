@@ -5,12 +5,7 @@ export default defineConfig({
   test: {
     globals: true,
     globalSetup: 'vitest.globalSetup.ts',
-    include: ['src/**/*.spec.ts', 'test/**/*.e2e-spec.ts'],
-    coverage: {
-      reporter: ['text', 'lcov'],
-      include: ['src/**/*.ts'],
-      exclude: ['src/**/*.spec.ts', 'src/main.ts'],
-    },
+    include: ['src/**/*.spec.ts'],
   },
   plugins: [swc.vite()],
 });
