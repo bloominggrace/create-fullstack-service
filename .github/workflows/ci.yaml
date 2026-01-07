@@ -67,6 +67,7 @@ jobs:
           REDIS_PORT=${{ vars.REDIS_PORT }}
           REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
           REDIS_DB=${{ vars.REDIS_DB }}
+          ALLOW_ORIGINS=${{ vars.ALLOW_ORIGINS }}
           THROTTLE_LIMIT=${{ vars.THROTTLE_LIMIT }}
           THROTTLE_TTL=${{ vars.THROTTLE_TTL }}
           EOF
