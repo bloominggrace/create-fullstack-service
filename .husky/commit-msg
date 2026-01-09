@@ -17,7 +17,7 @@
   fi
 
   while IFS= read -r BODY; do
-    if [ ${#BODY} -gt 72 ] && ! [[ "$BODY" =~ https?:// ]]; then
+    if [ ${#BODY} -gt 72 ] && ! [[ "$BODY" =~ ^# ]] && ! [[ "$BODY" =~ https?:// ]]; then
       echo "🔴 '${BODY:0:20}...'가 ${#BODY}자로 72자 제한을 초과했습니다."
       exit 1
     fi
