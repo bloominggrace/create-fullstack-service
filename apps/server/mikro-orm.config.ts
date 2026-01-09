@@ -3,10 +3,9 @@ import { defineConfig } from '@mikro-orm/postgresql';
 import { SeedManager } from '@mikro-orm/seeder';
 import { config } from 'dotenv';
 
-config({
-  path: `.env.${process.env.NODE_ENV}`,
-  quiet: true,
-});
+export function getEnvFilePath(): string {
+  return `.env.${process.env.NODE_ENV}`;
+}
 
 export function isProduction(): boolean {
   return process.env.NODE_ENV === 'production';
@@ -15,6 +14,11 @@ export function isProduction(): boolean {
 export function isDevelopment(): boolean {
   return process.env.NODE_ENV === 'development';
 }
+
+config({
+  path: getEnvFilePath(),
+  quiet: true,
+});
 
 export default defineConfig({
   dbName: process.env.POSTGRES_DB,

@@ -1,5 +1,9 @@
-import { type INestApplication } from '@nestjs/common';
+import { type ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
+import { HttpStatus, type INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
+import { ThrottlerStorage } from '@nestjs/throttler';
+import ms from 'ms';
 import request from 'supertest';
 import { type App } from 'supertest/types';
 
@@ -17,11 +21,31 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
+  beforeEach(async () => {
+    await app.get<ThrottlerStorageRedisService>(ThrottlerStorage).redis.flushdb();
+  });
+
   afterAll(async () => {
     await app.close();
   });
 
   test('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
+    return request(app.getHttpServer()).get('/').expect(HttpStatus.OK).expect('Hello World!');
+  });
+
+  describe('AppModule 테스트', () => {
+    test(
+      'API 요청 제한이 설정되어 있는지 확인한다.',
+      async () => {
+        const throttleLimit = app.get(ConfigService).getOrThrow<number>('THROTTLE_LIMIT');
+
+        for (let i = 0; i < throttleLimit; i++) {
+          await request(app.getHttpServer()).get('/').expect(HttpStatus.OK);
+        }
+
+        await request(app.getHttpServer()).get('/').expect(HttpStatus.TOO_MANY_REQUESTS);
+      },
+      ms('10s'),
+    );
   });
 });
