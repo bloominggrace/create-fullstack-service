@@ -4,6 +4,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { TerminusModule } from '@nestjs/terminus';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
@@ -18,6 +19,7 @@ import { AppService } from './app.service';
     LoggerModule.forRoot(loggerConfig),
     MikroOrmModule.forRoot(),
     CacheModule.registerAsync(cacheConfig),
+    TerminusModule,
     ThrottlerModule.forRootAsync(throttlerConfig),
   ],
   controllers: [AppController],
