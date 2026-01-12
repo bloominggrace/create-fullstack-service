@@ -8,7 +8,9 @@ import { TerminusModule } from '@nestjs/terminus';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
-import { isProduction } from '../mikro-orm.config';
+import { isProduction } from '@/../mikro-orm.config';
+import { RedisModule } from '@/redis/redis.module';
+
 import { cacheConfig, configConfig, loggerConfig, throttlerConfig } from './app.configs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -19,6 +21,7 @@ import { AppService } from './app.service';
     LoggerModule.forRoot(loggerConfig),
     MikroOrmModule.forRoot(),
     CacheModule.registerAsync(cacheConfig),
+    RedisModule,
     TerminusModule,
     ThrottlerModule.forRootAsync(throttlerConfig),
   ],
