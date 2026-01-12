@@ -1,7 +1,7 @@
 import KeyvRedis from '@keyv/redis';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { type CacheModuleAsyncOptions, type CacheModuleOptions } from '@nestjs/cache-manager';
-import { ConfigModule, type ConfigModuleOptions, type ConfigObject, ConfigService } from '@nestjs/config';
+import { type ConfigModuleOptions, type ConfigObject, ConfigService } from '@nestjs/config';
 import { type ThrottlerAsyncOptions, type ThrottlerModuleOptions } from '@nestjs/throttler';
 import { Redis } from 'ioredis';
 import ms from 'ms';
@@ -67,7 +67,6 @@ export const loggerConfig: Params = {
 
 export const cacheConfig: CacheModuleAsyncOptions = {
   isGlobal: true,
-  imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (configService: ConfigService): CacheModuleOptions => {
     return {
@@ -87,7 +86,6 @@ export const cacheConfig: CacheModuleAsyncOptions = {
 };
 
 export const throttlerConfig: ThrottlerAsyncOptions = {
-  imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ThrottlerModuleOptions => {
     return {

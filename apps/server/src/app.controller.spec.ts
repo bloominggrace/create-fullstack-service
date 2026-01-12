@@ -1,3 +1,4 @@
+import { TerminusModule } from '@nestjs/terminus';
 import { Test, type TestingModule } from '@nestjs/testing';
 
 import { AppController } from './app.controller';
@@ -8,6 +9,7 @@ describe('AppController', () => {
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
+      imports: [TerminusModule],
       controllers: [AppController],
       providers: [AppService],
     }).compile();
