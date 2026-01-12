@@ -3,9 +3,11 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
 import { type CacheModuleAsyncOptions, type CacheModuleOptions } from '@nestjs/cache-manager';
 import { type ConfigModuleOptions, type ConfigObject, ConfigService } from '@nestjs/config';
 import { type ThrottlerAsyncOptions, type ThrottlerModuleOptions } from '@nestjs/throttler';
-import { Redis } from 'ioredis';
+import { type Redis } from 'ioredis';
 import ms from 'ms';
 import { type Params } from 'nestjs-pino';
+
+import { REDIS_CLIENT, RedisModule } from '@/redis/redis.module';
 
 import { getEnvFilePath, isDevelopment, isProduction } from '../mikro-orm.config';
 
@@ -86,17 +88,11 @@ export const cacheConfig: CacheModuleAsyncOptions = {
 };
 
 export const throttlerConfig: ThrottlerAsyncOptions = {
-  inject: [ConfigService],
-  useFactory: (configService: ConfigService): ThrottlerModuleOptions => {
+  imports: [RedisModule],
+  inject: [ConfigService, REDIS_CLIENT],
+  useFactory: (configService: ConfigService, redisClient: Redis): ThrottlerModuleOptions => {
     return {
-      storage: new ThrottlerStorageRedisService(
-        new Redis({
-          host: configService.getOrThrow<string>('REDIS_HOST'),
-          port: configService.getOrThrow<number>('REDIS_PORT'),
-          password: configService.getOrThrow<string>('REDIS_PASSWORD'),
-          db: configService.getOrThrow<number>('REDIS_DB'),
-        }),
-      ),
+      storage: new ThrottlerStorageRedisService(redisClient),
       throttlers: [
         {
           limit: configService.getOrThrow('THROTTLE_LIMIT'),

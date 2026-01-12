@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     name: 빌드
@@ -60,7 +59,7 @@ jobs:
           cat << EOF > apps/server/.env.$NODE_ENV
           POSTGRES_HOST=${{ vars.POSTGRES_HOST }}
           POSTGRES_PORT=${{ vars.POSTGRES_PORT }}
-          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_USER=${{ vars.POSTGRES_USER }}
           POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB=${{ vars.POSTGRES_DB }}
           REDIS_HOST=${{ vars.REDIS_HOST }}
