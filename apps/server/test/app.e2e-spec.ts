@@ -1,9 +1,10 @@
 import { type ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
-import { HttpStatus, type INestApplication } from '@nestjs/common';
+import { HttpStatus, type INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { ThrottlerStorage } from '@nestjs/throttler';
 import ms from 'ms';
+import { Logger } from 'nestjs-pino';
 import request from 'supertest';
 import { type App } from 'supertest/types';
 
@@ -13,11 +14,23 @@ describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
 
   beforeAll(async () => {
-    const moduleFixture = await Test.createTestingModule({
+    const testingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
-    app = moduleFixture.createNestApplication();
+    app = testingModule.createNestApplication();
+    app.useLogger(app.get(Logger));
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+    app.enableCors({
+      origin: app.get(ConfigService).get<string[]>('ALLOW_ORIGINS'),
+      credentials: true,
+    });
     await app.init();
   });
 

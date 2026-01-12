@@ -1,7 +1,7 @@
 import KeyvRedis from '@keyv/redis';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { type CacheModuleAsyncOptions, type CacheModuleOptions } from '@nestjs/cache-manager';
-import { ConfigModule, type ConfigModuleOptions, ConfigService } from '@nestjs/config';
+import { ConfigModule, type ConfigModuleOptions, type ConfigObject, ConfigService } from '@nestjs/config';
 import { type ThrottlerAsyncOptions, type ThrottlerModuleOptions } from '@nestjs/throttler';
 import { Redis } from 'ioredis';
 import ms from 'ms';
@@ -20,6 +20,13 @@ export function getStatusCodeIcon(statusCode: number): string {
 export const configConfig: ConfigModuleOptions = {
   isGlobal: true,
   envFilePath: getEnvFilePath(),
+  load: [
+    (): ConfigObject => {
+      return {
+        ALLOW_ORIGINS: process.env.ALLOW_ORIGINS!.split(','),
+      };
+    },
+  ],
 };
 
 export const loggerConfig: Params = {
