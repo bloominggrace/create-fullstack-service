@@ -10,7 +10,7 @@ import { type App } from 'supertest/types';
 
 import { AppModule } from '@/app.module';
 
-describe('AppController (e2e)', () => {
+describe('E2E 테스트', () => {
   let app: INestApplication<App>;
 
   beforeAll(async () => {
