@@ -67,6 +67,8 @@ jobs:
           REDIS_PORT=${{ vars.REDIS_PORT }}
           REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
           REDIS_DB=${{ vars.REDIS_DB }}
+          THROTTLE_LIMIT=${{ vars.THROTTLE_LIMIT }}
+          THROTTLE_TTL=${{ vars.THROTTLE_TTL }}
           EOF
       - name: 인프라 실행
         run: mise run infra up --env $NODE_ENV

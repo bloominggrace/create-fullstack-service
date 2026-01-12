@@ -1,10 +1,13 @@
 import KeyvRedis from '@keyv/redis';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { type CacheModuleAsyncOptions, type CacheModuleOptions } from '@nestjs/cache-manager';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule, type ConfigModuleOptions, ConfigService } from '@nestjs/config';
+import { type ThrottlerAsyncOptions, type ThrottlerModuleOptions } from '@nestjs/throttler';
+import { Redis } from 'ioredis';
 import ms from 'ms';
 import { type Params } from 'nestjs-pino';
 
-import { isDevelopment, isProduction } from '../mikro-orm.config';
+import { getEnvFilePath, isDevelopment, isProduction } from '../mikro-orm.config';
 
 export function getStatusCodeIcon(statusCode: number): string {
   if (statusCode >= 500) return '🔥';
@@ -13,6 +16,11 @@ export function getStatusCodeIcon(statusCode: number): string {
   if (statusCode >= 200) return '✅';
   return 'ℹ️';
 }
+
+export const configConfig: ConfigModuleOptions = {
+  isGlobal: true,
+  envFilePath: getEnvFilePath(),
+};
 
 export const loggerConfig: Params = {
   pinoHttp: {
@@ -67,6 +75,29 @@ export const cacheConfig: CacheModuleAsyncOptions = {
         }),
       ],
       ttl: ms('5m'),
+    };
+  },
+};
+
+export const throttlerConfig: ThrottlerAsyncOptions = {
+  imports: [ConfigModule],
+  inject: [ConfigService],
+  useFactory: (configService: ConfigService): ThrottlerModuleOptions => {
+    return {
+      storage: new ThrottlerStorageRedisService(
+        new Redis({
+          host: configService.getOrThrow<string>('REDIS_HOST'),
+          port: configService.getOrThrow<number>('REDIS_PORT'),
+          password: configService.getOrThrow<string>('REDIS_PASSWORD'),
+          db: configService.getOrThrow<number>('REDIS_DB'),
+        }),
+      ),
+      throttlers: [
+        {
+          limit: configService.getOrThrow('THROTTLE_LIMIT'),
+          ttl: configService.getOrThrow('THROTTLE_TTL'),
+        },
+      ],
     };
   },
 };
