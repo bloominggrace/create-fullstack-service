@@ -2,17 +2,26 @@ import { MikroORM } from '@mikro-orm/core';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
 import { isProduction } from '../mikro-orm.config';
-import { cacheConfig, loggerConfig } from './app.configs';
+import { cacheConfig, configConfig, loggerConfig, throttlerConfig } from './app.configs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [LoggerModule.forRoot(loggerConfig), MikroOrmModule.forRoot(), CacheModule.registerAsync(cacheConfig)],
+  imports: [
+    ConfigModule.forRoot(configConfig),
+    LoggerModule.forRoot(loggerConfig),
+    MikroOrmModule.forRoot(),
+    CacheModule.registerAsync(cacheConfig),
+    ThrottlerModule.forRootAsync(throttlerConfig),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, AppService],
 })
 export class AppModule implements OnModuleInit {
   constructor(private readonly orm: MikroORM) {}
