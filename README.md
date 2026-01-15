@@ -21,39 +21,33 @@ mise trust
 mise install
 ```
 
-### 3. Git LFS 설정
-
-```shell
-git lfs install --skip-repo
-```
-
-### 4. 인프라
+### 3. 인프라
 
 인프라 실행 및 종료할 때 `--env` 사용하여 환경을 선택할 수 있습니다.
 
-#### 4-1. 인프라 실행
+#### 3-1. 인프라 실행
 
 ```shell
 mise run infra up --env development
 ```
 
-#### 4-2. 인프라 종료
+#### 3-2. 인프라 종료
 
 ```shell
 mise run infra down --env development
 ```
 
-### 5. 의존성 설치
+### 4. 의존성 설치
 
 ```shell
 pnpm install
 ```
 
-### 6. 환경 변수 설정
+### 5. 환경 변수 설정
 
 `.env.template`을 참고하여 환경 변수를 설정하세요.
 
-### 7. 테스트 실행
+### 6. 테스트 실행
 
 테스트는 `NODE_ENV`가 `test`인 환경에서 실행되어야 합니다.
 
@@ -61,7 +55,7 @@ pnpm install
 pnpm test
 ```
 
-### 8. 개발 환경 실행
+### 7. 개발 환경 실행
 
 개발은 `NODE_ENV`가 `development`인 환경에서 실행되어야 합니다.
 

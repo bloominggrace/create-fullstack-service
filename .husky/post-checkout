@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+if ! LOG=$(git lfs post-checkout "$@" 2>&1); then
+  echo "❌ LFS 동기화에 실패했습니다."
+  echo "$LOG"
+  exit 1
+elif [ -n "$LOG" ]; then
+  echo "✅ LFS 동기화에 성공했습니다."
+fi
+
+exit 0

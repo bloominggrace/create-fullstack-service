@@ -9,7 +9,7 @@
   "packageManager": "pnpm@10.23.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky",
+    "prepare": "git lfs install --skip-repo && husky",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "build": "turbo build",
