@@ -30,7 +30,7 @@ Choose the subject based on what is being modified:
 
 ### Examples
 - `tsconfig.ts` → **TSConfig**
-- `eslint.config.js` → **ESLint**
+- `eslint.config.mjs` → **ESLint**
 - `mikro-orm.config.ts` → **MikroORM**
 - `users.service.ts` → **사용자** or **UsersService**
 
