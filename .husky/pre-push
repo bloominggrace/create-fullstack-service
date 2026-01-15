@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 GIT_STATUS=$(git status --porcelain)
 
 echo "🔍 린트 검사를 시작합니다."
