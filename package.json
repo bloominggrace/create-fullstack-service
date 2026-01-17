@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "turbo": "^2.7.3"
+    "turbo": "^2.7.5"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
