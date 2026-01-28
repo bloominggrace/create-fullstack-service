@@ -1,0 +1,33 @@
+name: 검토
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+jobs:
+  review:
+    name: Claude
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+      pull-requests: write
+    environment: review
+    if: |
+      github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
+      contains(fromJSON('["OWNER", "MEMBER"]'), github.event.comment.author_association)
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v6
+      - name: Claude 검토
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          track_progress: true
+          prompt: |
+            /review            
+            Note:
+             - Write all review comments and feedback in Korean.
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__*,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
