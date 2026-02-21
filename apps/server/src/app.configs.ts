@@ -25,7 +25,7 @@ export const configConfig: ConfigModuleOptions = {
   load: [
     (): ConfigObject => {
       return {
-        ALLOW_ORIGINS: process.env.ALLOW_ORIGINS!.split(','),
+        ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS!.split(','),
       };
     },
   ],
