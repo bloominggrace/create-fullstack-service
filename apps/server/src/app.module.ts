@@ -9,6 +9,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
 import { isProduction } from '@/../mikro-orm.config';
+import { OriginsModule } from '@/origins/origins.module';
 import { RedisModule } from '@/redis/redis.module';
 
 import { cacheConfig, configConfig, loggerConfig, throttlerConfig } from './app.configs';
@@ -24,6 +25,7 @@ import { AppService } from './app.service';
     RedisModule,
     TerminusModule,
     ThrottlerModule.forRootAsync(throttlerConfig),
+    OriginsModule,
   ],
   controllers: [AppController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, AppService],
@@ -39,6 +41,7 @@ export class AppModule implements OnModuleInit {
 
   private async updateDatabase() {
     const schema = this.orm.schema;
+
     await schema.ensureDatabase();
 
     if ((await schema.getUpdateSchemaSQL()).length !== 0) {
