@@ -1,0 +1,26 @@
+name: Client CI
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'package.json'
+      - 'apps/client/**'
+jobs:
+  build:
+    name: 빌드
+    runs-on: ubuntu-latest
+    environment: build
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v6
+        with:
+          lfs: true
+      - name: 런타임 환경 설정
+        uses: jdx/mise-action@v3
+        env:
+          MISE_NODE_GPG_VERIFY: "false"
+      - name: 의존성 설치
+        run: pnpm --filter=. --filter=client install
+      - name: 프로젝트 빌드
+        run: pnpm --filter=. --filter=client build
