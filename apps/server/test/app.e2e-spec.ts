@@ -169,7 +169,7 @@ describe('E2E 테스트', () => {
     });
 
     describe('(DELETE) /v1/origins/:id', () => {
-      test('오리진를 삭제한다.', async () => {
+      test('오리진을 삭제한다.', async () => {
         const originFixture = Random.originFixture({ url: 'https://google.com' });
 
         await request(app.getHttpServer()).delete(`/v1/origins/${originFixture.id}`).expect(HttpStatus.OK);
