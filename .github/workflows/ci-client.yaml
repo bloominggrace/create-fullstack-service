@@ -19,7 +19,7 @@ jobs:
       - name: 런타임 환경 설정
         uses: jdx/mise-action@v3
         env:
-          MISE_NODE_GPG_VERIFY: "false"
+          MISE_NODE_GPG_VERIFY: 'false'
       - name: 의존성 설치
         run: pnpm --filter=. --filter=client install
       - name: 프로젝트 빌드
