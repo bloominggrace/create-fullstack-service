@@ -52,4 +52,10 @@ export default tseslint.config([
       '@typescript-eslint/explicit-module-boundary-types': 'off',
     },
   },
+  {
+    files: ['**/routes/**/*.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ]);
