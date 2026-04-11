@@ -9,6 +9,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import tailwindCategorized from 'eslint-plugin-tailwindcss-categorized';
 
 export default tseslint.config([
   globalIgnores(['dist']),
@@ -32,6 +33,7 @@ export default tseslint.config([
     plugins: {
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
+      'tailwindcss-categorized': tailwindCategorized,
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
@@ -44,6 +46,7 @@ export default tseslint.config([
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': ['warn', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      'tailwindcss-categorized/ordering': 'warn',
     },
   },
   {
