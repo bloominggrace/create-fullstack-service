@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
       "@test/*": ["./test/*"]
@@ -27,6 +26,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "types": ["vitest/globals"]
+    "types": ["node", "vitest/globals"]
   }
 }
