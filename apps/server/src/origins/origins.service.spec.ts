@@ -55,9 +55,7 @@ describe('OriginsService 테스트', () => {
 
   describe('오리진 생성', () => {
     test('오리진 생성에 성공한다.', async () => {
-      const { origin } = await originsService.create({ url: Random.url() });
-
-      expect(origin).toBeDefined();
+      expect(await originsService.create({ url: Random.url() })).toBeDefined();
     });
 
     test('이미 존재하는 URL로 오리진을 생성하면 실패한다.', async () => {
@@ -109,7 +107,7 @@ describe('OriginsService 테스트', () => {
 
     test('오리진 조회에 성공한다.', async () => {
       const originFixture = Random.originFixture();
-      const { origin } = await originsService.findOne({ id: originFixture.id });
+      const origin = await originsService.findOne({ id: originFixture.id });
 
       expect(origin.id).toEqual(originFixture.id);
       expect(origin.url).toEqual(originFixture.url);
@@ -124,7 +122,7 @@ describe('OriginsService 테스트', () => {
   describe('오리진 수정', () => {
     test('오리진 수정에 성공한다.', async () => {
       const originFixture = Random.originFixture({ url: 'https://bloomingchatbot.com' });
-      const { origin } = await originsService.findOne({ url: originFixture.url });
+      const origin = await originsService.findOne({ url: originFixture.url });
 
       await originsService.update({ origin, url: Random.url(), isActive: !originFixture.isActive });
 
@@ -136,9 +134,9 @@ describe('OriginsService 테스트', () => {
   describe('오리진 삭제', () => {
     test('오리진 삭제에 성공한다.', async () => {
       const originFixture = Random.originFixture();
-      const { origin } = await originsService.findOne({ id: originFixture.id });
+      const origin = await originsService.findOne({ id: originFixture.id });
 
-      await originsService.delete({ origin });
+      await originsService.remove(origin);
 
       await expect(originsService.findOne({ id: originFixture.id })).rejects.toThrow(NotFoundException);
     });
