@@ -8,7 +8,7 @@ import { TerminusModule } from '@nestjs/terminus';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
-import { isProduction } from '@/../mikro-orm.config';
+import mikroOrmConfig, { isProduction } from '@/../mikro-orm.config';
 import { OriginsModule } from '@/origins/origins.module';
 import { RedisModule } from '@/redis/redis.module';
 
@@ -20,7 +20,7 @@ import { AppService } from './app.service';
   imports: [
     ConfigModule.forRoot(configConfig),
     LoggerModule.forRoot(loggerConfig),
-    MikroOrmModule.forRoot(),
+    MikroOrmModule.forRoot(mikroOrmConfig),
     CacheModule.registerAsync(cacheConfig),
     RedisModule,
     TerminusModule,
@@ -45,7 +45,7 @@ export class AppModule implements OnModuleInit {
     await schema.ensureDatabase();
 
     if ((await schema.getUpdateSchemaSQL()).length !== 0) {
-      await schema.updateSchema();
+      await schema.update();
       Logger.log(`DB가 업데이트 되었습니다.`, AppModule.name);
     }
   }

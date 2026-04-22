@@ -9,6 +9,7 @@ import { Test, type TestingModule } from '@nestjs/testing';
 import { Random } from '@test/test.utils';
 import { expect } from 'vitest';
 
+import mikroOrmConfig from '@/../mikro-orm.config';
 import { configConfig } from '@/app.configs';
 
 import { AllowedOriginsService } from './allowed-origins.service';
@@ -26,7 +27,7 @@ describe('OriginsService 테스트', () => {
     testingModule = await Test.createTestingModule({
       imports: [
         await ConfigModule.forRoot(configConfig),
-        MikroOrmModule.forRoot(),
+        MikroOrmModule.forRoot(mikroOrmConfig),
         MikroOrmModule.forFeature([Origin]),
         CacheModule.register(),
       ],

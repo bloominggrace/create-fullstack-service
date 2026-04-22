@@ -1,3 +1,4 @@
+import { ReflectMetadataProvider } from '@mikro-orm/decorators/legacy';
 import { Migrator } from '@mikro-orm/migrations';
 import { defineConfig, UnderscoreNamingStrategy } from '@mikro-orm/postgresql';
 import { SeedManager } from '@mikro-orm/seeder';
@@ -17,8 +18,8 @@ export function isDevelopment(): boolean {
 }
 
 export class PluralNamingStrategy extends UnderscoreNamingStrategy {
-  classToTableName(entityName: string): string {
-    return pluralize(super.classToTableName(entityName));
+  classToTableName(entityName: string, tableName?: string): string {
+    return tableName ?? pluralize(super.classToTableName(entityName));
   }
 }
 
@@ -34,11 +35,10 @@ export default defineConfig({
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   entities: ['dist/**/*.entity.js'],
-  entitiesTs: isDevelopment() ? ['src/**/*.entity.ts'] : undefined,
+  entitiesTs: isProduction() ? undefined : ['src/**/*.entity.ts'],
   namingStrategy: PluralNamingStrategy,
-  debug: isDevelopment(),
-  validate: true,
-  strict: true,
+  metadataProvider: ReflectMetadataProvider,
+  debug: !isProduction(),
   extensions: [Migrator, SeedManager],
   migrations: {
     path: 'dist/migrations',
