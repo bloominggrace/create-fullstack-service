@@ -14,7 +14,7 @@ export class OriginsService {
     private readonly allowedOriginsService: AllowedOriginsService,
   ) {}
 
-  async create(params: { url: string }): Promise<{ origin: Origin }> {
+  async create(params: { url: string }): Promise<Origin> {
     const origin = this.entityManager.create(Origin, params);
 
     try {
@@ -28,7 +28,7 @@ export class OriginsService {
       throw error;
     }
 
-    return { origin };
+    return origin;
   }
 
   async search(params: {
@@ -78,9 +78,9 @@ export class OriginsService {
     return { origins, totalCount, pageNumber, pageSize, totalPages: getTotalPages(totalCount, pageSize) };
   }
 
-  async findOne(where: FilterQuery<Origin>): Promise<{ origin: Origin }> {
+  async findOne(where: FilterQuery<Origin>): Promise<Origin> {
     try {
-      return { origin: await this.entityManager.findOneOrFail(Origin, where) };
+      return await this.entityManager.findOneOrFail(Origin, where);
     } catch (error) {
       if (error instanceof NotFoundError) {
         throw new NotFoundException('찾을 수 없는 오리진입니다.');
@@ -89,19 +89,17 @@ export class OriginsService {
     }
   }
 
-  async update(params: { origin: Origin; url?: string; isActive?: boolean }): Promise<{ origin: Origin }> {
+  async update(params: { origin: Origin; url?: string; isActive?: boolean }): Promise<Origin> {
     const { origin, url, isActive } = params;
 
     this.entityManager.assign(origin, omitBy({ url, isActive }, isUndefined));
     await this.entityManager.flush();
     await this.allowedOriginsService.invalidate();
 
-    return { origin };
+    return origin;
   }
 
-  async delete(params: { origin: Origin }): Promise<void> {
-    const { origin } = params;
-
+  async remove(origin: Origin): Promise<void> {
     await this.entityManager.remove(origin).flush();
     await this.allowedOriginsService.invalidate();
   }

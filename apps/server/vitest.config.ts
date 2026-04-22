@@ -4,6 +4,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [swc.vite()],
+  oxc: false,
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -12,6 +13,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    setupFiles: 'vitest.setup.ts',
     globalSetup: 'vitest.globalSetup.ts',
     include: ['src/**/*.spec.ts'],
   },

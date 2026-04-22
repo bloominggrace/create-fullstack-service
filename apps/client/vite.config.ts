@@ -1,6 +1,7 @@
+import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import { type Config, tanstackRouter } from '@tanstack/router-plugin/vite';
-import react from '@vitejs/plugin-react';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { type ViteUserConfig } from 'vitest/config';
@@ -19,7 +20,7 @@ const routerConfig: Partial<Config> = {
 };
 
 export default defineConfig({
-  plugins: [tanstackRouter(routerConfig), react(), tailwindcss()],
+  plugins: [tanstackRouter(routerConfig), react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
