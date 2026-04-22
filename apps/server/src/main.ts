@@ -24,7 +24,7 @@ async function bootstrap() {
         return callback(null, true);
       }
 
-      let allowedOrigins: string[] | undefined = undefined;
+      let allowedOrigins: string[] | undefined;
 
       try {
         allowedOrigins = await app.get(AllowedOriginsService).get();

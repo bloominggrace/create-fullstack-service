@@ -49,7 +49,7 @@ describe('E2E 테스트', () => {
           return callback(null, true);
         }
 
-        let allowedOrigins: string[] | undefined = undefined;
+        let allowedOrigins: string[] | undefined;
 
         try {
           allowedOrigins = await app.get(AllowedOriginsService).get();

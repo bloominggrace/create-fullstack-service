@@ -35,7 +35,7 @@ export default defineConfig({
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   entities: ['dist/**/*.entity.js'],
-  entitiesTs: isProduction() ? undefined : ['src/**/*.entity.ts'],
+  entitiesTs: isDevelopment() ? ['src/**/*.entity.ts'] : undefined,
   namingStrategy: PluralNamingStrategy,
   metadataProvider: ReflectMetadataProvider,
   debug: !isProduction(),
