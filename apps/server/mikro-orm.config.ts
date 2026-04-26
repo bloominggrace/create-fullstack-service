@@ -21,6 +21,12 @@ export class PluralNamingStrategy extends UnderscoreNamingStrategy {
   classToTableName(entityName: string, tableName?: string): string {
     return tableName ?? pluralize(super.classToTableName(entityName));
   }
+
+  joinKeyColumnName(entityName: string, referencedColumnName?: string, composite?: boolean): string {
+    const tableName = super.classToTableName(entityName);
+
+    return composite && referencedColumnName ? `${tableName}_${referencedColumnName}` : `${tableName}_id`;
+  }
 }
 
 config({
