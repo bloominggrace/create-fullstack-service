@@ -69,7 +69,7 @@ export class OriginsController {
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.originsService.remove(await this.originsService.findOne({ id }));
   }
