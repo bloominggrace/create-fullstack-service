@@ -25,7 +25,7 @@ paths:
 - 라우트는 RESTful을 기본으로 하고 kebab-case로 명명한다.
 - 라우트는 `@HttpCode`를 사용하여 올바른 상태 코드를 명시한다.
 - 경로 파라미터는 타입에 맞는 파이프로 검증한다.
-- `@Expose`된 필드만 반환하기 위해 `mapTo`로 응답 DTO에 매핑한다.
+- `@Expose`된 속성만 반환하기 위해 `mapTo`로 응답 DTO에 매핑한다.
 
 # 가드 정책
 
@@ -45,9 +45,9 @@ paths:
 # 엔티티 정책
 
 - PK는 UUIDv7을 사용하고 `uuidv7()`으로 생성한다.
-- 자동 채움 필드는 `Opt`를 붙인다.
+- 자동 채움 속성은 `Opt`를 붙인다.
 - 변경 추적이 필요한 엔티티는 `createdAt`, `updatedAt`을 둔다.
-- 고아 레코드를 방지하기 위해 관계 필드는 `deleteRule`을 명시한다.
+- 고아 레코드를 방지하기 위해 관계 속성은 `deleteRule`을 명시한다.
 
 # DTO 정책
 
@@ -58,7 +58,7 @@ paths:
   - 예시 1: `CreateUserDto`, `CreateUserRes`
   - 예시 2: `FindUsersDto`, `FindUsersRes`
 - 입력은 `class-validator`로 검증한다.
-- 의도치 않은 정보 유출을 막기 위해 응답 필드는 `@Expose()`로 명시한다.
+- 의도치 않은 정보 유출을 막기 위해 응답 속성은 `@Expose()`로 명시한다.
 
 # 테스트 정책
 
