@@ -15,6 +15,7 @@ paths:
 
 - 같은 배럴 안의 파일끼리는 상대 경로로 임포트한다.
 - 다른 배럴의 파일은 `@/` 별칭으로 그 배럴을 통해 임포트한다.
+- `index.ts`는 `Re-export`만 두고 구현은 별도 파일로 분리한다.
 
 # 타입 정책
 
@@ -34,6 +35,13 @@ paths:
 - `features`는 여러 페이지에서 재사용하는 비즈니스 로직 코드를 둔다.
   - 예시 1: `features/ui/select`
 - `pages`는 한 페이지에 종속된 코드를 둔다.
+- 같은 레이어 안에서는 코드의 종류로 그룹화한다.
+  - 예시 1: `common/ui`
+  - 예시 2: `common/lib`
+  - 예시 3: `features/store`
+- 같은 목적의 컴포넌트는 같은 폴더로 둔다.
+  - 예시 1: `features/ui/buttons`
+  - 예시 2: `features/ui/cards`
 
 # 이름 정책
 
@@ -45,10 +53,28 @@ paths:
   - 예시 2: `handleCompleteOtp`
   - 예시 3: `handleResendOtp`
   - 예시 4: `handleShowCaptcha`
+- 훅은 반환하는 것에 따라 명명한다.
+  - 값 또는 상태를 반환하면 명사구로 명명한다.
+    - 예시 1: `useDeviceInfo`
+    - 예시 2: `useApiKey`
+  - 동작을 수행하면 `use{동사}{명사}`로 명명한다.
+    - 예시 1: `useChallengeOtp`
+    - 예시 2: `useCompleteOtp`
+    - 예시 3: `useSignInFido`
+- 여러 개를 표현하면 복수형, 하나를 표현하면 단수형으로 명명한다.
+  - 예시 1: `LikesBadge`
+  - 예시 2: `ViewersBadge`
+  - 예시 3: `LikeButton`
+- 아이콘은 의미가 아니라 모양으로 명명한다.
+  - 예시 1: `BadgeCheck`
+  - 예시 2: `CheckCircle`
+- 단 비즈니스 로직에만 사용하는 아이콘은 도메인의 의미를 담아 명명한다.
+  - 예시 1: `Home1`, `Home2`
+  - 예시 2: `Live1`, `Live2`
 
-# 필드 정렬 정책
+# 속성 정렬 정책
 
-- Props의 필드는 값 및 변경 함수, 이벤트, 스타일, 자식 순으로 정렬한다.
+- Props의 속성은 값 및 변경 함수, 이벤트, 스타일, 자식 순으로 정렬한다.
   - 예시 1:
     ```ts
     type ComboboxProps = {
@@ -60,7 +86,7 @@ paths:
       children: ReactNode;
     };
     ```
-- Context의 필드는 값 및 변경 함수, 이벤트, 스타일, DOM 참조 순으로 정렬한다.
+- Context의 속성은 값 및 변경 함수, 이벤트, 스타일, DOM 참조 순으로 정렬한다.
   - 예시 1:
     ```ts
     type SelectContextValue = {
@@ -88,5 +114,7 @@ paths:
 
 - 클래스는 항상 `cn`으로 정의한다.
   - 예시 1: `className={cn('flex')}`
-- 변형이 필요한 경우에는 `cva`로 정의한다.
-  - 예시 1: `className={cn(variants({ size }), 'inline-flex items-center')}`
+- 상태에 따른 변형이 필요한 경우 `cva`로 정의한다.
+  - 예시 1: `cn(variants({ variant, loading }), 'inline-flex items-center', className)`
+- SVG의 경우 색을 변경하려면 색상 관련 속성을 `currentColor`로 두고 `className`으로 색을 정의한다.
+  - 예시 1: `<Eye className={cn('text-neutral-light4')} />`

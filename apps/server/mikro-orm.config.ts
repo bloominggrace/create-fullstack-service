@@ -46,7 +46,7 @@ export default defineConfig({
   extensions: [Migrator, SeedManager],
   migrations: {
     path: 'dist/migrations',
-    pathTs: 'src/migrations',
+    pathTs: 'migrations',
     disableForeignKeys: false,
     emit: 'ts',
   },

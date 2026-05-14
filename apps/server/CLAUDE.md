@@ -23,5 +23,5 @@ pnpm --filter server lint && pnpm --filter server type-check && pnpm --filter se
 DB 스키마를 변경했다면 마이그레이션 파일이 생성되었는지 반드시 확인한다.
 
 ```bash
-NODE_ENV=development pnpm --filter server migration:generate
+NODE_ENV=development pnpm --filter server migration:create
 ```
